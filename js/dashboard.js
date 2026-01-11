@@ -226,16 +226,26 @@ function initHospitalMap() {
     }
   );
 }
-const hospitalModalEl = document.getElementById("hospitalModal");
 
-hospitalModalEl.addEventListener('shown.bs.modal', () => {
-  if (hospitalMap) {
-    hospitalMap.invalidateSize(); // forces Leaflet to recalc size
-    if (routingControl) {
-      routingControl.getPlan().setWaypoints(routingControl.getWaypoints()); // redraw route if exists
-    }
+document.addEventListener("DOMContentLoaded", function() {
+  const hospitalModalEl = document.getElementById("hospitalModal");
+
+  if (hospitalModalEl) { // only attach if element exists
+    hospitalModalEl.addEventListener('shown.bs.modal', () => {
+      if (hospitalMap) {
+        hospitalMap.invalidateSize(); // forces Leaflet to recalc size
+        if (routingControl) {
+          routingControl.getPlan().setWaypoints(routingControl.getWaypoints()); // redraw route if exists
+        }
+      }
+    });
+  } else {
+    console.warn("Hospital modal element not found!");
   }
 });
+
+
+
 function loadNearbyHospitals(lat, lng) {
   const query = `
     [out:json][timeout:25];
@@ -345,3 +355,6 @@ function routeToHospital(hLat, hLng) {
   })
   .addTo(hospitalMap);
 }
+document.querySelectorAll('.leaflet-routing-container *').forEach(el => {
+  el.style.color = 'black';
+});
