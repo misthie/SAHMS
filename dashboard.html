@@ -202,7 +202,22 @@
   <!-- Dashboard JS -->
   <!-- Firebase -->
 
+<script>
+  function applyRoleUI(role) {
+  if (role === "admin") {
+    document.getElementById("btnNewPatient").style.display = "block";
+  }
 
+  if (role === "doctor") {
+    document.getElementById("btnNewPatient").style.display = "none";
+  }
+
+  if (role === "patient") {
+    document.getElementById("btnNewPatient").style.display = "none";
+    document.getElementById("patientManagement").style.display = "none";
+  }
+}
+</script>
 <!-- Inline handlers LAST -->
 <script>
   function openPatientManagement() {
